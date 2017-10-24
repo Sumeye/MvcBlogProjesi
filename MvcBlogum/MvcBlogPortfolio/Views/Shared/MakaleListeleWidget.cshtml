@@ -1,0 +1,98 @@
+﻿@model IEnumerable<MvcBlogPortfolio.Models.Makale>
+
+<script src="~/Content/style/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function myfunction() {
+        $("a.begen").click(function myfunction() {
+            var id = $(this).data("id");
+            var link = "/Makale/Begen/" + id;
+            $.ajax({
+                type: "GET",
+                url: link,
+                success: function (result) {
+                    $("a.begen").html(result);
+                }
+            });
+        });
+    });
+</script>
+
+@section head{
+        <script src="~/Content/style/js/jquery.min.js"></script>
+        <script>
+            $(document).ready(function myfunction() {
+                $("a.goruntulenmesayisi").click(function myfunction() {
+                    var id = $(this).data("id");
+                    var link = "/Makale/Goruntulendi/" + id;
+                    $.ajax({
+                        type: "GET",
+                        url: link,
+                        success: function myfunction(result) {
+                            $("a.goruntulenmesayisi").html(result);
+
+                        }
+                    });
+                });
+            });
+        </script>
+    }
+
+
+
+@helper IcerikKisalt(string metin)
+{
+if (metin.Length > 300)
+{
+        @metin.Substring(0, 300)
+}
+else
+{
+        @metin
+}
+}
+
+<div class="blog-posts col-blog">
+    @foreach (MvcBlogPortfolio.Models.Makale mkl in Model)
+    {
+        <div class="post row">
+            <div class="col-sm-4">
+                <figure>
+                    <a href="~/Makale/Detay/@mkl.MakaleId">
+                        <div class="text-overlay">
+                            <div class="info"><span>Daha Fazla</span></div>
+                        </div>
+                        <img src="@mkl.Resim.OrtaBoyut" alt="" />
+                    </a>
+                </figure>
+            </div>
+            <div class="col-sm-8 post-content">
+                <div class="meta">
+                    <span class="date">@mkl.EklenmeTarihi</span>
+                    <span class="comments"><a href="#">@mkl.Yorum.Count <i class="icon-chat-1"> </i></a></span>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span>
+                            <a class="begen" href="javascript:void(0)" data-id="@mkl.MakaleId">
+                                @mkl.Begeni
+                                <img src="~/Content/image/like.png" />
+                            </a>
+                        </span>
+                    }
+
+                    <span>
+                        <a class="goruntulenmesayisi" href="#" data-id="@mkl.MakaleId">
+                            @mkl.GoruntulenmeSayisi
+                            <img src="~/Content/image/view.png" />
+                        </a>
+                    </span>
+               
+
+                </div>
+                <h2 class="post-title"><a href="~/Makale/Detay/@mkl.MakaleId">@mkl.Baslik</a></h2>
+                     @IcerikKisalt(mkl.Icerik)
+            </div>
+        </div>
+    }
+</div>
+

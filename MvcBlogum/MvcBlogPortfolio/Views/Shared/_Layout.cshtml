@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="style/images/favicon.png">
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/bootstrap.js"></script>
+
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/style/css/style.css" rel="stylesheet" />
+    <link href="~/Content/style/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/style/css/plugins.css" rel="stylesheet" />
+   
+    <link href="~/Content/style/css/color/red.css" rel="stylesheet" />
+    <link href="~/Content/style/type/bebas.css" rel="stylesheet" />
+    <link href="~/Content/style/type/fontello.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+          <script src="style/js/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+          <![endif]-->
+    @RenderSection("head", false);
+</head>
+<body>
+    <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+    <div class="body-wrapper">
+        <div class="navbar default">
+            <div class="navbar-header">
+                <div class="container">
+                    <div class="basic-wrapper">
+                        <a class="btn responsive-menu pull-right" data-toggle="collapse" data-target=".navbar-collapse"><i></i></a>
+                        <div class="navbar-brand"><a href="~/Home/Index">LOGO </a></div>
+                    </div>
+                    <nav class="collapse navbar-collapse pull-right">
+                        <ul class="nav navbar-nav">
+                            <li><a href="~/Home/Index">Anasayfa</a></li>
+                            @if (User.IsInRole("Yazar"))
+                            {
+                                <li class="current dropdown">
+                                    <a href="~/Yazar/Index" class="dropdown-toggle js-activated">Yazar Paneli</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Makale/Ekle">MakaleEkle</a></li>
+                                        <li><a href="~/Yazar/YazarınMakaleleri">Makalelerim</a></li>
+                                    </ul>
+                                </li>
+                      
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="dropdown">
+                                    <a href="~/Admin/Index" class="dropdown-toggle js-activated">Admin Paneli</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="~/Makale/Ekle">Makale Ekle</a></li>
+                                        <li><a href="~/Kategori/KategoriEkle">Kategori Ekle</a></li>
+                                        <li><a href="~/Etiket/EtiketEkle">Etiket Ekle</a></li>
+                                        <li><a href="~/Admin/RolEkle">Rol Ekle</a></li>
+                                        <li><a href="~/Admin/KullaniciEkle">Kullanıcı Ekle</a></li>
+                                        <li><a href="~/Admin/YazarOnaylari">Yazar Onayları </a></li>
+                                        <li><a href="~/Admin/YazarlariListele">Yazar Listele </a></li>
+                                    </ul>
+                                </li>
+                            }
+                            
+                         @if (!User.IsInRole("Yazar") || !User.Identity.IsAuthenticated || !User.IsInRole("Admin"))
+                         {
+                            <li>
+                                <a href="~/Yazar/YazarOl">Yazar Ol</a>
+                            </li>
+                         }
+
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a href="~/Kullanici/UyeOl">Üye Ol</a>
+                                </li>
+                            }
+
+
+                       
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a href="~/Kullanici/CikisYap/@Session["KullaniciId"]">Çıkış Yap</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="~/Kullanici/GirisYap">Giriş Yap</a></li>
+                            }
+
+                       
+                            <li class="dropdown social-dropdown pull-right">
+                                <div class="share btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="icon-heart-1"></i></div>
+                                <ul class="button-group dropdown-menu dropdown-menu-right share-links">
+                                    <li><a href="www.facebook.com" class="btn"><i class="icon-s-facebook"></i></a></li>
+                                    <li><a href="www.twitter.com" class="btn"><i class="icon-s-twitter"></i></a></li>
+                                </ul>
+                            </li>
+                            <!--/social-dropdown -->
+                        </ul>
+                        <!--/.navbar-nav -->
+                    </nav>
+                    <!--/.nav-collapse -->
+                </div>
+                <!--/.container -->
+            </div>
+            <!--/.navbar-header -->
+        </div>
+        <!--/.navbar -->
+        <div class="offset"></div>
+        <div class="dark-wrapper page-title">
+            <div class="container inner">
+                <h1> BLOGUM </h1>
+            </div>
+            <!--/.container -->
+        </div>
+        <!--/.page-title -->
+
+        <div class="container inner">
+            <div class="row">
+                <div class="col-sm-8 content">
+
+                    @RenderBody()
+                </div>
+                <aside class="col-sm-4 sidebar lp30">
+                    @{
+                        Html.RenderPartial("Arama");
+                    }
+                    @{ 
+                        Html.RenderAction("KategoriListele", "Kategori");
+                    }
+                    @{ 
+                        Html.RenderAction("PopulerMakalelerWidget", "Home");
+                    }
+                    @{ 
+                        Html.RenderPartial("SiteHakkinda");
+                    }
+
+                    @{ 
+                        Html.RenderAction("EtiketleriListele", "Etiket");
+                    }
+                </aside>
+            </div>
+        </div>
+        <footer class="footer black-wrapper">
+            <div class="container inner">
+                <div class="row">
+
+                    <div class="col-sm-3">
+                        <div class="widget">
+                            @{
+                                Html.RenderAction("PopulerMakalelerWidget", "Home");
+                            }
+                            <!-- /.post-list -->
+                        </div>
+                        <!-- /.widget -->
+                    </div>
+                    <!-- /column -->
+
+                    <div class="col-sm-3">
+                        <div class="widget">
+                            @{
+                                Html.RenderAction("KategoriListele", "Kategori");
+                            }
+                        </div>
+                        <!-- /.widget -->
+                    </div>
+                    <!-- /column -->
+
+                    <div class="col-sm-3">
+                        <div class="widget">
+                            <h3 class="widget-title">Site Hakkında</h3>
+                            <p>Gönüllü yazarların kendilerine ait makalerini paylaşabileceği bir platformdur. </p>
+                            <div class="contact-info">
+                                <i class="icon-location"></i>BLOG<br />
+                                <i class="icon-phone"></i>+00 (123) 456 78 90 <br />
+                                <i class="icon-mobile"></i>+80 (547) 455 47 54 <br />
+                                <i class="icon-mail"></i> <a href="first.last@email.com">blogblog@email.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /column -->
+
+                    <div class="col-sm-3">
+                        <div class="widget">
+                            @{
+                                Html.RenderAction("EtiketleriListele", "Etiket");
+                            }
+                            <!-- /.tag-list -->
+                        </div>
+                        <!-- /.widget -->
+
+                        <div class="widget">
+                            @{
+                                Html.RenderPartial("SiteHakkinda");
+                            }
+                        </div>
+                        <!-- /.widget -->
+
+                    </div>
+                    <!-- /column -->
+
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- .container -->
+
+            <div class="sub-footer">
+                <div class="container">
+                    <p class="pull-left">@DateTime.Now.Year &copy; Tüm Hakları Saklıdır. </p>
+                    <ul class="footer-menu pull-right">
+                        <li><a href="~/Home/Index">Anasayfa</a></li>
+                        <li><a href="#">Hakkımda</a></li>
+                        <li><a href="#">Calısmalarım</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">İletisim</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <!-- /footer -->
+    </div>
+    <!--/.body-wrapper -->
+    <script src="~/Content/style/js/jquery.min.js"></script>
+    <script src="~/Content/style/js/bootstrap.min.js"></script>
+    <script src="~/Content/style/js/plugins.js"></script>
+    <script src="~/Content/style/js/scripts.js"></script>
+</body>
+</html>
+
+
+
+

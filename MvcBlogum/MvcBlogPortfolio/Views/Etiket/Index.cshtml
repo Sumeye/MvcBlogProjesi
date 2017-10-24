@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "Etiket";
+    Layout = null;
+}
+@*Etiket Kontrolü içindeki makale Listeye gönderiyoruz*@
+@{ 
+    Html.RenderAction("MakaleListele", new { id = Model });
+}

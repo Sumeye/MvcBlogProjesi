@@ -1,0 +1,85 @@
+﻿@model MvcBlogPortfolio.Tools.Myblog
+
+@{
+    ViewBag.Title = "YazarlariListele";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h2>YazarlariListele</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+ 
+        <th>Resim</th>
+        <th>Adı</th>
+        <th>Soyadı</th>
+        <th>Kullanıcı Adı</th>
+        <th>Açıklama</th>
+        <th>Mail Adresi</th>
+        <th>Cinsiyet</th>
+        <th>Doğum Tarihi</th>
+        <th>Kayıt tarihi</th>
+        <th>Yazar</th>
+        <th>Onaylandı</th>
+        <th>Aktif</th>
+        <th>Güncelle</th>
+        <th>Sil</th>
+    
+    </tr>
+
+@foreach (var item in Model.kullanici) {
+    <tr>
+        <td>
+           <img src="~/Content/YazarResim/useryorum.jpg" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Soyadi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KullaniciAdi)
+        </td>
+        <td>
+            @if (item.Aciklama.Length>=10)
+            {
+                @Html.DisplayFor(modelItem=>item.Aciklama).ToString().Substring(0,10)
+            }
+            else
+            {
+                @Html.DisplayFor(ModelItem => item.Aciklama)
+            }
+             
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MailAdres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cinsiyet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DogumTarihi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KayitTarihi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Yazar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Onaylandi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aktif)
+        </td>
+
+          <td>  @Html.ActionLink("Sil", "Yazar", new { id=item.KullaniciId })
+        </td>
+    </tr>
+}
+
+</table>

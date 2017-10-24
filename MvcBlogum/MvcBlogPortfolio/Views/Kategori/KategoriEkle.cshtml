@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "KategoriEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>KategoriEkle</h2>
+
+<form action="~/Kategori/KategoriEkle" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Kategori Adı:</td>
+            <td><input type="text" name="Adi" value="" /></td>
+        </tr>
+        <tr>
+
+            <td><input type="submit" name="name" value="Ekle" /></td>
+        </tr>
+    </table>
+</form>

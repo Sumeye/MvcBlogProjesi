@@ -1,0 +1,69 @@
+﻿@model MvcBlogPortfolio.Tools.Myblog
+
+@{
+    ViewBag.Title = "YazarınMakaleleri";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Yeni Makale Ekle", "Ekle","Makale")
+</p>
+
+    <table class="table">
+        <tr>
+            <th>Kategori Adı</th>
+            <th>Kullanıcı Adı</th>
+            <th>Resim</th>
+            <th>Başlık</th>
+            <th>İçerik</th>
+            <th>Ekleme Tarihi</th>
+            <th>Görüntülenme Sayısı</th>
+            <th>Beğenme Sayısı</th>
+            <th>Güncelle</th>
+            <th>Sil</th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.makaleler)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kategori.KategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kullanicilar.Adi)
+                </td>
+                <td>
+                    <img src="@item.Resim.KucukBoyut" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Baslik)
+                </td>
+                <td>
+                    @if (item.Icerik.Length >= 20)
+                {
+                        @Html.DisplayFor(modelItem => item.Icerik).ToString().Substring(0, 20);
+                }
+                else
+                {
+                        @Html.DisplayFor(modelItem => item.Icerik)
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EklenmeTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoruntulenmeSayisi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Begeni)
+                </td>
+                <td>@Html.ActionLink("Guncelle", "Guncelle", new { id = item.MakaleId }) |</td>
+                <td>@Html.ActionLink("Sil", "MakaleSil", new { id = item.MakaleId })</td>
+            </tr>
+
+
+        }
+    </table>

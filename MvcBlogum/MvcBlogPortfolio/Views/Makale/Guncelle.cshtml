@@ -1,0 +1,62 @@
+﻿@model MvcBlogPortfolio.Tools.Myblog
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckfinder/ckfinder.js"></script>
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<form action="~/Makale/Guncelle/@Model.makale.MakaleId" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td> Başlık:</td>
+            <td><input type="text" id="Baslik" name="Baslik" value="@Model.makale.Baslik"/></td>
+        </tr>
+        <tr>
+            <td>İçerik:</td>
+
+            <td><textarea id="Icerik" name="Icerik">@Model.makale.Icerik</textarea></td>
+        </tr>
+        <tr>
+            <td>Ekleme Tarihi:</td>
+
+            <td><input type="datetime" id="EklemeTarihi" name="EklemeTarihi" value="@Model.makale.EklenmeTarihi.Value.ToShortDateString()" /></td>
+        </tr>
+        <tr>
+            <td>Kategori:</td>
+            <td>
+                <select id="KategoriID" name="KategoriID">
+                    @foreach (var item in Model.kategori)
+                    {
+                        if (item.KategoriId == Model.makale.KategoriID)
+                        {
+                            <option value="@item.KategoriId" selected>@item.KategoriAdi</option>
+                        }
+                        else
+                        {
+                          <option value="@item.KategoriId">@item.KategoriAdi</option>}
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Resim:</td>
+            <td>
+                <input type="file" name="resim" value=@Model.makale.Resim />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="name" value="Ekle" />
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+    var editor = CKEDITOR.replace('Icerik');
+    CKFinder.setupCKEditor(editor, '/ckfinder/');
+</script>

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MvcBlogPortfolio.Models.Kullanicilar>
+@{
+    ViewBag.Title = "YazarOnaylari";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<table>
+    @foreach (MvcBlogPortfolio.Models.Kullanicilar Kullanici in Model)
+    {
+        <tr>
+            <td>@Kullanici.Adi</td>
+            <td><a href="~/Admin/OnayVer/@Kullanici.KullaniciId">Onay Ver</a></td>
+        </tr>
+
+    }
+</table>

@@ -1,0 +1,19 @@
+﻿@model  IEnumerable<MvcBlogPortfolio.Models.Kategori>
+@{
+    ViewBag.Title = "KategoriListele";
+    Layout = null;
+}
+
+<div class="sidebox widget">
+    <h3 class="widget-title section-title">Kategori</h3>
+    <ul class="circled">
+        @foreach (MvcBlogPortfolio.Models.Kategori kategori in Model)
+        {
+        <li><a href="~/Kategori/Index/@kategori.KategoriId">@kategori.KategoriAdi (@kategori.Makale.Count)</a></li>
+
+        }
+       
+      
+    </ul>
+</div>
+  

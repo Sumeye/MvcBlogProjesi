@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "GirisYap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GirisYap</h2>
+
+<form  action="~/Kullanici/GirisYap" method="post">
+    <table  class="table">
+        <tr>
+            <td>Kullanıcı Adı:</td>
+            <td><input type="text" name="KullaniciAdi" value="" /></td>
+        </tr>
+        <tr>
+            <td>Parola:</td>
+            <td><input type="password" name="Parola" value="" /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit"name="name" value="Giriş Yap"   class="btn btn-success"/></td>
+        </tr>
+    </table>
+</form>
